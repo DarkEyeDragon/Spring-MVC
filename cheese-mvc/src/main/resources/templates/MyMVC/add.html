@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<h1 th:text="${pageTitle}"></h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<p>This page is where the user is allowed to add items to the list. The list will be updated once the "Add Grocery"
+    button is clicked and the user will be directed to the "List" page to see the changes.</p>
+
+<form method="post">
+    <input type="text" name="groceryName"/>
+    <input type="submit" value="Add Grocery"/>
+</form>
+
+</body>
+</html>
