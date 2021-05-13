@@ -28,7 +28,7 @@ public class MyMVCController {
 
     // List Page: Read CRUD function = GET HTTP method
     @RequestMapping(value="list", method = RequestMethod.GET)
-    public String List(Model model){
+    public String list(Model model){
 
         model.addAttribute("groceries", groceries);
         model.addAttribute("tabTitle","List");
@@ -56,6 +56,14 @@ public class MyMVCController {
         // Redirect to "/myMVC/list" after action is committed
         return new RedirectView("list");
 
+    }
+
+    // Weather page: Read CRUD function = GET HTTP method
+    @RequestMapping(value="weather", method = RequestMethod.GET)
+    public String weather(Model model){
+        model.addAttribute("tabTitle","Weather");
+        model.addAttribute("pageTitle","Check the Weather");
+        return "MyMVC/weather";
     }
 
 
