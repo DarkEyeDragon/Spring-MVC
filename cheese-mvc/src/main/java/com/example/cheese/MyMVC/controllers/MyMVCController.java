@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -61,6 +62,8 @@ public class MyMVCController {
     // Weather page: Read CRUD function = GET HTTP method
     @RequestMapping(value="weather", method = RequestMethod.GET)
     public String weather(Model model){
+        CurrentWeather currentWeather = new CurrentWeather("Clear", BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.TEN);
+        model.addAttribute("currentWeather", currentWeather);
         model.addAttribute("tabTitle","Weather");
         model.addAttribute("pageTitle","Check the Weather");
         return "MyMVC/weather";
