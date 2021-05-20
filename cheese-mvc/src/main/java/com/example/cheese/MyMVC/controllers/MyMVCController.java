@@ -1,5 +1,6 @@
 package com.example.cheese.MyMVC.controllers;
 
+import com.example.cheese.MyMVC.controllers.DefaultWeatherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,10 @@ import java.util.ArrayList;
 @RequestMapping("MyMVC")
 public class MyMVCController {
 
+    // Grocery List Variables
     ArrayList<String> groceries = new ArrayList<>();
+
+
 
     // Request Path is set to: "/MyMVC" instead of default: "/"
     @RequestMapping(value = "")
@@ -59,21 +63,25 @@ public class MyMVCController {
 
     }
 
-    // Weather page: Read CRUD function = GET HTTP method
+    // Default view (page) for "MyMVC/weather" route (Shows default weather values)
     @RequestMapping(value="weather", method = RequestMethod.GET)
     public String weather(Model model){
-        CurrentWeather currentWeather = new CurrentWeather("Clear", BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.TEN);
-        model.addAttribute("currentWeather", currentWeather);
         model.addAttribute("tabTitle","Weather");
         model.addAttribute("pageTitle","Check the Weather");
+        model.addAttribute("currentWeather", new DefaultWeatherService().getCurrentWeather());
         return "MyMVC/weather";
     }
 
+    // CREATE CRUD function = POST HTTP method (Takes user input for location Ex: (City, State, Country))
+    //  and returns the corresponding weather for that location.
+    @RequestMapping(value="add", method=RequestMethod.POST)
+    public RedirectView processWeatherForm(){
+
+        // Look-Up given location and return weather information to user. Redirect user to updated weather page.
 
 
-
-
-
-
+        return new RedirectView("weather");
+    }
 
 }
+
