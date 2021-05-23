@@ -19,9 +19,9 @@ public class MyMVCController {
     // Grocery List Variables
     ArrayList<String> groceries = new ArrayList<>();
 
-    ArrayList<String> employeeIdentification = new ArrayList<>();
-    ArrayList<String> employeeFirstName = new ArrayList<>();
-    ArrayList<String> employeeLastName = new ArrayList<>();
+    // List of Employee Objects. Employee (String ID, String FirstName, String LastName)
+    ArrayList<Employee> employees = new ArrayList<>();
+
 
 
 
@@ -73,10 +73,12 @@ public class MyMVCController {
     // Read CRUD function = GET HTTP method
     @RequestMapping(value="employee-data", method = RequestMethod.GET)
     public String displayEmployeeData(Model model){
-        model.addAttribute("employeeIDs", employeeIdentification);
-        model.addAttribute("employeeFN", employeeFirstName);
-        model.addAttribute("employeeLN", employeeLastName);
 
+        //IF - Arraylist IS-NOT empty, retrieve values from ArrayList
+        if (!employees.isEmpty()) {
+
+            model.addAttribute("employees",employees);
+        }
         model.addAttribute("tabTitle","Employees Data");
         model.addAttribute("pageTitle", "List of Employees");
         return "MyMVC/employee-data";
@@ -96,10 +98,11 @@ public class MyMVCController {
     @RequestMapping(value="crud", method = RequestMethod.POST)
     public RedirectView processEmployeeData(@RequestParam String employeeID, @RequestParam String firstName,
                                             @RequestParam String lastName){
-        // Retrieve employee data to be displayed on "employee-data" view.
-            employeeIdentification.add(employeeID);
-            employeeFirstName.add(firstName);
-            employeeLastName.add(lastName);
+
+        // Create new Employee Object and assign user-input values from View to the properties.
+        // Add Employee-Object to the Collection (Arraylist)
+        Employee e1 = new Employee(employeeID, firstName, lastName);
+        employees.add(e1);
 
 
 

@@ -15,7 +15,10 @@
   If the list is empty then the error message "No Employees Found" should be displayed.</p>
 <br>
 
-<h2>Employee</h2>
+<h2>Employee Table</h2>
+
+<!-- If the ArrayList is empty then display message -->
+<p th:unless="${employees} and ${employees.size()}">No Employees to Display</p>
 
 
 <table style="width:10%">
@@ -24,10 +27,10 @@
         <th>Firstname</th>
         <th>Lastname</th>
     </tr>
-    <tr>
-        <td th:each=" ID: ${employeeIDs}" th:text="${ID}"></td>
-        <td th:each=" FN: ${employeeFN}" th:text="${FN}"></td>
-        <td th:each=" LN: ${employeeLN}" th:text="${LN}"></td>
+    <tr th:each="employee: ${employees}">
+        <td th:text="${employee.employeeID}"></td>
+        <td th:text="${employee.firstName}"></td>
+        <td th:text="${employee.lastName}"></td>
     </tr>
 </table>
 
