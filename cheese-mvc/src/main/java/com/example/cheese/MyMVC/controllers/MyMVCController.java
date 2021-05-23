@@ -1,6 +1,6 @@
 package com.example.cheese.MyMVC.controllers;
 
-import com.example.cheese.MyMVC.controllers.DefaultWeatherService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.math.BigDecimal;
+
 import java.util.ArrayList;
 
 
@@ -18,6 +18,11 @@ public class MyMVCController {
 
     // Grocery List Variables
     ArrayList<String> groceries = new ArrayList<>();
+
+    ArrayList<String> employeeIdentification = new ArrayList<>();
+    ArrayList<String> employeeFirstName = new ArrayList<>();
+    ArrayList<String> employeeLastName = new ArrayList<>();
+
 
 
 
@@ -63,24 +68,44 @@ public class MyMVCController {
 
     }
 
-    // Default view (page) for "MyMVC/weather" route (Shows default weather values)
-    @RequestMapping(value="weather", method = RequestMethod.GET)
-    public String weather(Model model){
-        model.addAttribute("tabTitle","Weather");
-        model.addAttribute("pageTitle","Check the Weather");
-        model.addAttribute("currentWeather", new DefaultWeatherService().getCurrentWeather());
-        return "MyMVC/weather";
+    //- Add employees to be displayed
+
+    // Read CRUD function = GET HTTP method
+    @RequestMapping(value="employee-data", method = RequestMethod.GET)
+    public String displayEmployeeData(Model model){
+        model.addAttribute("employeeIDs", employeeIdentification);
+        model.addAttribute("employeeFN", employeeFirstName);
+        model.addAttribute("employeeLN", employeeLastName);
+
+        model.addAttribute("tabTitle","Employees Data");
+        model.addAttribute("pageTitle", "List of Employees");
+        return "MyMVC/employee-data";
+
     }
 
-    // CREATE CRUD function = POST HTTP method (Takes user input for location Ex: (City, State, Country))
-    //  and returns the corresponding weather for that location.
-    @RequestMapping(value="add", method=RequestMethod.POST)
-    public RedirectView processWeatherForm(){
+    // Read CRUD function = GET HTTP method
+    @RequestMapping(value="crud", method = RequestMethod.GET)
+    public String displayAddEmployeeForm(Model model){
+        model.addAttribute("tabTitle","Add Employees");
+        model.addAttribute("pageTitle", "Add Employee Data");
+        return "MyMVC/crud";
 
-        // Look-Up given location and return weather information to user. Redirect user to updated weather page.
+    }
+
+    // Create CRUD function = POST HTTP method
+    @RequestMapping(value="crud", method = RequestMethod.POST)
+    public RedirectView processEmployeeData(@RequestParam String employeeID, @RequestParam String firstName,
+                                            @RequestParam String lastName){
+        // Retrieve employee data to be displayed on "employee-data" view.
+            employeeIdentification.add(employeeID);
+            employeeFirstName.add(firstName);
+            employeeLastName.add(lastName);
 
 
-        return new RedirectView("weather");
+
+        // Redirect to "/myMVC/list" after action is committed
+        return new RedirectView("employee-data");
+
     }
 
 }

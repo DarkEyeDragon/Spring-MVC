@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="UTF-8"/>
+<html lang="en" xmlns:th="http://www.thymleaf.org/">
+
+
+<head th:replace="fragments :: head"></head></head>
+
+
+<body>
+<h1 th:text="${pageTitle}"></h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<p>This page is to showcase CRUD operations through adding a list of employees inputted by the user on the "crud" page.
+  If the list is empty then the error message "No Employees Found" should be displayed.</p>
+<br>
+
+<h2>Employee</h2>
+
+
+<table style="width:10%">
+    <tr>
+        <th>EmployeeID</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+    </tr>
+    <tr>
+        <td th:each=" ID: ${employeeIDs}" th:text="${ID}"></td>
+        <td th:each=" FN: ${employeeFN}" th:text="${FN}"></td>
+        <td th:each=" LN: ${employeeLN}" th:text="${LN}"></td>
+    </tr>
+</table>
+
+
+
+
+</body>
+
+
+</html>

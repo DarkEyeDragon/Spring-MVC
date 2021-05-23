@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<h1 th:text="${pageTitle}"></h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<p>This page is intended to showcase CRUD operations. The user is able to add an Employee to the table</p><br>
+<p>Which is then reflected on the webpage once the table is updated.</p>
+
+
+<form method="post">
+
+    <label for="empID">Employee ID:</label>
+    <input type="text" id="empID" name="employeeID"/>
+
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName"/>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName"/>
+
+
+    <input type="submit" value="Add Employee"/>
+
+</form>
+
+</body>
+</html>
