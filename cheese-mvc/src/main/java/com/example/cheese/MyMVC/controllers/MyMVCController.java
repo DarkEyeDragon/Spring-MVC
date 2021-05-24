@@ -1,15 +1,13 @@
 package com.example.cheese.MyMVC.controllers;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 @Controller
@@ -71,21 +69,6 @@ public class MyMVCController {
     //- Add employees to be displayed
 
     // Read CRUD function = GET HTTP method
-    @RequestMapping(value="employee-data", method = RequestMethod.GET)
-    public String displayEmployeeData(Model model){
-
-        //IF - Arraylist IS-NOT empty, retrieve values from ArrayList
-        if (!employees.isEmpty()) {
-
-            model.addAttribute("employees",employees);
-        }
-        model.addAttribute("tabTitle","Employees Data");
-        model.addAttribute("pageTitle", "List of Employees");
-        return "MyMVC/employee-data";
-
-    }
-
-    // Read CRUD function = GET HTTP method
     @RequestMapping(value="crud", method = RequestMethod.GET)
     public String displayAddEmployeeForm(Model model){
         model.addAttribute("tabTitle","Add Employees");
@@ -111,5 +94,40 @@ public class MyMVCController {
 
     }
 
-}
+    // Read CRUD function = GET HTTP method
+    @RequestMapping(value="employee-data", method = RequestMethod.GET)
+    public String displayEmployeeData(Model model){
 
+        //IF - Arraylist IS-NOT empty, retrieve values from ArrayList
+        if (!employees.isEmpty()) {
+
+            model.addAttribute("employees",employees);
+        }
+        model.addAttribute("tabTitle","Employees Data");
+        model.addAttribute("pageTitle", "List of Employees");
+        return "MyMVC/employee-data";
+
+    }
+
+
+    // Delete Employee from ArrayList
+    @RequestMapping(value="delete-emp/{e1}", method = RequestMethod.POST)
+    public String processEmployeeDeletion(@PathVariable String e1, Model model){
+
+        // Compare Employee-Object ID's to ID passed from delete button
+        Iterator<Employee> iter = employees.iterator();
+        while(iter.hasNext()){
+            Employee employee = iter.next();
+            if (employee.getEmployeeID() == e1){
+                employees.remove(employee);
+            }
+        }
+
+
+        // Redirect to "/myMVC/employee-data" to reflect changes after action is committed
+        return displayEmployeeData(model);
+
+
+
+    }
+}

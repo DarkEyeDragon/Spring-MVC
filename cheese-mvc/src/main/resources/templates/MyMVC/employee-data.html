@@ -11,15 +11,14 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<p>This page is to showcase CRUD operations through adding a list of employees inputted by the user on the "crud" page.
-  If the list is empty then the error message "No Employees Found" should be displayed.</p>
+<p>This page is to showcase CRUD operations through adding a list of employees inputted by the user on the "Add An Employee" page.
+  If the table is empty then the error message "No Employees to Display" should be displayed.</p>
 <br>
 
 <h2>Employee Table</h2>
 
 <!-- If the ArrayList is empty then display message -->
 <p th:unless="${employees} and ${employees.size()}">No Employees to Display</p>
-
 
 <table style="width:10%">
     <tr>
@@ -31,9 +30,14 @@
         <td th:text="${employee.employeeID}"></td>
         <td th:text="${employee.firstName}"></td>
         <td th:text="${employee.lastName}"></td>
+        <td><input type="submit" value="Update"/></td>
+        <td>
+            <form th:action="@{delete-emp/{e1}(e1=${employee.getEmployeeID})}" method="post">
+                <input type="submit" value="Delete"/>
+            </form>
+        </td>
     </tr>
 </table>
-
 
 
 
