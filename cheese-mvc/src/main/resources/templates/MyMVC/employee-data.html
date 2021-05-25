@@ -27,7 +27,7 @@
         <th>Lastname</th>
     </tr>
     <tr th:each="employee: ${employees}">
-        <td th:text=${employee.employeeID}"></td>
+        <td th:text="${employee.employeeID}"></td>
         <td th:text="${employee.firstName}"></td>
         <td th:text="${employee.lastName}"></td>
         <td><input type="submit" value="Update"/></td>
