@@ -89,7 +89,7 @@ public class MyMVCController {
 
 
 
-        // Redirect to "/myMVC/list" after action is committed
+        // Redirect to "/myMVC/employee-data" after action is committed
         return new RedirectView("employee-data");
 
     }
@@ -98,11 +98,8 @@ public class MyMVCController {
     @RequestMapping(value="employee-data", method = RequestMethod.GET)
     public String displayEmployeeData(Model model){
 
-        //IF - Arraylist IS-NOT empty, retrieve values from ArrayList
-        if (!employees.isEmpty()) {
 
-            model.addAttribute("employees",employees);
-        }
+        model.addAttribute("employees",employees);
         model.addAttribute("tabTitle","Employees Data");
         model.addAttribute("pageTitle", "List of Employees");
         return "MyMVC/employee-data";
@@ -111,23 +108,21 @@ public class MyMVCController {
 
 
     // Delete Employee from ArrayList
-    @RequestMapping(value="delete-emp/{e1}", method = RequestMethod.POST)
+    @RequestMapping(value="delete-emp/{e1}", method = RequestMethod.GET)
     public String processEmployeeDeletion(@PathVariable String e1, Model model){
 
         // Compare Employee-Object ID's to ID passed from delete button
         Iterator<Employee> iter = employees.iterator();
-        while(iter.hasNext()){
+        while(iter.hasNext()) {
             Employee employee = iter.next();
-            if (employee.getEmployeeID() == e1){
+            if (employee.getEmployeeID() == e1) {
                 employees.remove(employee);
             }
         }
 
-
-        // Redirect to "/myMVC/employee-data" to reflect changes after action is committed
-        return displayEmployeeData(model);
-
-
+        // WORKS
+        // This is only directing back to the view. Need to find a way to send back with URL path being "employee-data'
+        return "MyMVC/employee-data";
 
     }
 }
