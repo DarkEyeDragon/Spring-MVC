@@ -98,29 +98,40 @@ public class MyMVCController {
     @RequestMapping(value="employee-data", method = RequestMethod.GET)
     public String displayEmployeeData(Model model){
 
-        model.addAttribute("employees",employees);
-        model.addAttribute("tabTitle","Employees Data");
+        model.addAttribute("employees", employees);
+        model.addAttribute("tabTitle", "Employees Data");
         model.addAttribute("pageTitle", "List of Employees");
-        return "MyMVC/employee-data";
+
+        if (!model.containsAttribute("redirect"))
+        {
+            return "MyMVC/employee-data";
+        }
+        else {
+            return "employee-data";
+        }
 
     }
 
     // Should be a POST Method
     // Delete Employee from ArrayList
     @RequestMapping(value="employee-data", method = RequestMethod.POST)
-    public String processEmployeeDeletion(@ModelAttribute Employee e1, Model model){
+    public RedirectView processEmployeeDeletion(@ModelAttribute Employee e1, Model model){
 
+        int i = 0;
         // Compare Employee-Object ID's to ID passed from delete button
         Iterator<Employee> iter = employees.iterator();
         while(iter.hasNext()) {
             Employee employee = iter.next();
             if (employee == e1) {
                 employees.remove(employee);
+
             }
         }
 
+        model.addAttribute("redirect", i);
+
         // WORKS
-        return displayEmployeeData(model);
+        return new RedirectView(displayEmployeeData(model));
 
     }
 }
