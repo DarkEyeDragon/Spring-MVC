@@ -98,7 +98,6 @@ public class MyMVCController {
     @RequestMapping(value="employee-data", method = RequestMethod.GET)
     public String displayEmployeeData(Model model){
 
-
         model.addAttribute("employees",employees);
         model.addAttribute("tabTitle","Employees Data");
         model.addAttribute("pageTitle", "List of Employees");
@@ -106,23 +105,22 @@ public class MyMVCController {
 
     }
 
-
+    // Should be a POST Method
     // Delete Employee from ArrayList
-    @RequestMapping(value="delete-emp/{e1}", method = RequestMethod.GET)
-    public String processEmployeeDeletion(@PathVariable String e1, Model model){
+    @RequestMapping(value="employee-data", method = RequestMethod.POST)
+    public String processEmployeeDeletion(@ModelAttribute Employee e1, Model model){
 
         // Compare Employee-Object ID's to ID passed from delete button
         Iterator<Employee> iter = employees.iterator();
         while(iter.hasNext()) {
             Employee employee = iter.next();
-            if (employee.getEmployeeID() == e1) {
+            if (employee == e1) {
                 employees.remove(employee);
             }
         }
 
         // WORKS
-        // This is only directing back to the view. Need to find a way to send back with URL path being "employee-data'
-        return "MyMVC/employee-data";
+        return displayEmployeeData(model);
 
     }
 }

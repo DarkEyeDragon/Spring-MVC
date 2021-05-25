@@ -32,7 +32,7 @@
         <td th:text="${employee.lastName}"></td>
         <td><input type="submit" value="Update"/></td>
         <td>
-            <form th:action="@{delete-emp/{e1}(e1=${employee.getEmployeeID})}">
+            <form th:action="@{employee-data}" th:object="${employee}" method="post">
                 <input type="submit" value="Delete"/>
             </form>
         </td>
